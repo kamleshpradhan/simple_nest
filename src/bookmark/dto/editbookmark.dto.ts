@@ -4,7 +4,7 @@ import { IsString, IsOptional } from 'class-validator';
 export class EditBookmarksDto {
   @IsString()
   @IsOptional()
-  name: string;
+  title: string;
 
   @IsString()
   @IsOptional()

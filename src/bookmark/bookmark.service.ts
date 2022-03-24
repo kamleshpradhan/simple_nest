@@ -61,7 +61,7 @@ export class BookmarkService {
         id: bookmarkId,
       },
     });
-    if (!bookmark || (await bookmark).userId !== userId) {
+    if (!bookmark || bookmark.userId !== userId) {
       throw new ForbiddenException('Access denied invalid credentials.');
     }
     await this.prisma.bookmark.delete({

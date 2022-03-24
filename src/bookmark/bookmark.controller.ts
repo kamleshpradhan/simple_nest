@@ -9,14 +9,22 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { userInfo } from 'os';
 import { GetUser } from 'src/auth/decorator';
+import { JwtGuard } from 'src/auth/guard';
 import { BookmarkService } from './bookmark.service';
 import { CreateBookmarksDto, EditBookmarksDto } from './dto';
+@UseGuards(JwtGuard)
 @Controller('bookmark')
 export class BookmarkController {
   constructor(private bookmarkService: BookmarkService) {}
+
+  @Get('hell')
+  sayHello() {
+    return 'Hello World';
+  }
 
   @Post()
   createBookmarks(
@@ -44,8 +52,9 @@ export class BookmarkController {
   ) {
     return this.bookmarkService.editBookmarksById(userId, bookmarkId, dto);
   }
+
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete()
+  @Delete(':id')
   deleteBookmarks(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
